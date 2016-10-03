@@ -1,22 +1,18 @@
 package tutka.mateusz.tester.utils.testerAssistant;
 
 import java.io.IOException;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 
 import tutka.mateusz.console_application.Application;
+import tutka.mateusz.tester.utils.testerAssistant.daolike.DAO;
 import tutka.mateusz.tester.utils.testerAssistant.domain.MaskEntity;
 import tutka.mateusz.tester.utils.testerAssistant.methods.HandleGeneratingSequentialTimestampedString;
 import tutka.mateusz.tester.utils.testerAssistant.methods.HandleSettingMask;
 import tutka.mateusz.tester.utils.testerAssistant.methods.IncreaseSequence;
-import tutka.mateusz.tester.utils.testerAssistant.persistance.ObjectDatabaseFactory;
+import tutka.mateusz.tester.utils.testerAssistant.methods.RemoveAlias;
+import tutka.mateusz.tester.utils.testerAssistant.methods.SetSequence;
 
 /**
- * Hello world!
+
  *
  */
 public class App 
@@ -42,29 +38,21 @@ public class App
     	application.getApplicationCommandBuilder().withKeyWord("next")
     											  .withMethod(new IncreaseSequence())
 		  										  .build();
+    	application.getApplicationCommandBuilder().withKeyWord("remove")
+    											  .withMethod(new RemoveAlias())
+    											  .build();
+    	application.getApplicationCommandBuilder().withKeyWord("set sequence")
+		  										  .withMethod(new SetSequence())
+		  										  .build();
 		
-    	for(MaskEntity entity: readAllMasksFromDatabase()){
+    	for(MaskEntity entity: DAO.retieveAllMasks()){
     		application.getApplicationCommandBuilder().withKeyWord(entity.getAlias())
 			  										  .withMethod(new HandleGeneratingSequentialTimestampedString(entity.getConstantPart(), entity.getAlias(), entity.isTimestamped(), entity.isSequential()))
 			  										  .build();
     	}
 
     	application.run();
-    	
-        
         
     }
     
-	private static List<MaskEntity> readAllMasksFromDatabase() {
-		EntityManager em = null;
-		try {
-			em = ObjectDatabaseFactory.getEntityManagerFactory().createEntityManager();
-			TypedQuery<MaskEntity> query = em.createQuery("SELECT me FROM MaskEntity me", MaskEntity.class);
-			return query.getResultList();
-		} finally {
-			em.close();
-			ObjectDatabaseFactory.getEntityManagerFactory().close();
-		}
-
-	}
 }

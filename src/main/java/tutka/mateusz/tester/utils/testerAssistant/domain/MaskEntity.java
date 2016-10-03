@@ -46,5 +46,9 @@ public class MaskEntity implements Serializable {
 	public boolean isSequential() {
 		return isSequential;
 	}
+	
+	public String toString(){
+		return alias;
+	}
 
 }
