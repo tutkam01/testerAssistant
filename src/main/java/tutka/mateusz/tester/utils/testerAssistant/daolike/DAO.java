@@ -5,46 +5,33 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import tutka.mateusz.tester.utils.testerAssistant.domain.MaskEntity;
+import tutka.mateusz.tester.utils.testerAssistant.domain.AliasEntity;
 import tutka.mateusz.tester.utils.testerAssistant.persistance.ObjectDatabaseFactory;
 
 public class DAO {
 	
-	public static List<MaskEntity> retieveAllMasks(){
-		EntityManager em = null;
-		try {
-			em = ObjectDatabaseFactory.getEntityManagerFactory().createEntityManager();
-			TypedQuery<MaskEntity> query = em.createQuery("SELECT me FROM MaskEntity me", MaskEntity.class);
+	public static EntityManager em = ObjectDatabaseFactory.getEntityManagerFactory().createEntityManager();
+	
+	public static List<AliasEntity> retieveAllAliases(){
+			TypedQuery<AliasEntity> query = em.createQuery("SELECT al FROM AliasEntity al", AliasEntity.class);
 			return query.getResultList();
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-		} finally {
-			em.close();
-			ObjectDatabaseFactory.getEntityManagerFactory().close();
-		}
-		return null;
 	}
 	
-	public static List<MaskEntity> findMaskByAlias(String alias){
-		EntityManager em = null;
-		em = ObjectDatabaseFactory.getEntityManagerFactory().createEntityManager();
-		TypedQuery<MaskEntity> query = em.createQuery("SELECT me FROM MaskEntity me where me.alias = :alias", MaskEntity.class);
+	public static List<AliasEntity> findMaskByAlias(String alias){
+		TypedQuery<AliasEntity> query = em.createQuery("SELECT al FROM AliasEntity al where al.alias = :alias", AliasEntity.class);
 		return query.setParameter("alias", alias).getResultList();
 	}
 	
-	
-	public static void removeMaskEntity(MaskEntity maskEntity){
-		EntityManager em = null;
-		try{
-			em = ObjectDatabaseFactory.getEntityManagerFactory().createEntityManager();
+	public static void removeMaskEntity(AliasEntity maskEntity){
 			em.getTransaction().begin();
-//			em.merge(maskEntity);
 			em.remove(maskEntity);
 			em.getTransaction().commit();
-		}finally {
-			em.close();
-			ObjectDatabaseFactory.getEntityManagerFactory().close();
-		}
+	}
+	
+	public static void saveNewEntity(AliasEntity entity){
+			em.getTransaction().begin();
+			em.persist(entity);
+			em.getTransaction().commit();
 	}
 
 }

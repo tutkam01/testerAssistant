@@ -12,9 +12,9 @@ public class SetSequence implements Method {
 		try{
 			int newSequence = Integer.parseInt(args[0]);
 			GlobalSequence.currentValue = newSequence;
-			return "Sequence updated successfully..";
+			return " Sequence updated successfully..";
 		}catch(NumberFormatException e){
-			return "Provided value is not a number..";
+			return " Provided value is not a number..";
 		}
 	}
 

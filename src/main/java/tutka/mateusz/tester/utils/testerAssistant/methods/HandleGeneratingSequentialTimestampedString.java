@@ -9,10 +9,10 @@ import tutka.mateusz.tester.utils.testerAssistant.clipboard.ClipboardHandle;
 import tutka.mateusz.tester.utils.testerAssistant.sequence.GlobalSequence;
 
 public class HandleGeneratingSequentialTimestampedString implements Method {
-	String constantPart;
-	String alias;
-	boolean isTimestamped;
-	boolean isSequential;
+	private String constantPart;
+	private String alias;
+	private boolean isTimestamped;
+	private boolean isSequential;
 	
 	public HandleGeneratingSequentialTimestampedString(String constantPart,	String alias, boolean isTimestamped, boolean isSequential) {
 		super();

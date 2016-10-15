@@ -1,14 +1,10 @@
 package tutka.mateusz.tester.utils.testerAssistant.methods;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 
 import tutka.mateusz.console_application.Application;
 import tutka.mateusz.interfaces.Method;
+import tutka.mateusz.tester.utils.testerAssistant.daolike.DAO;
 import tutka.mateusz.tester.utils.testerAssistant.domain.MaskEntity;
 import tutka.mateusz.tester.utils.testerAssistant.persistance.ObjectDatabaseFactory;
 
@@ -29,8 +25,8 @@ public class HandleSettingMask implements Method {
 		  										  .withMethod(new HandleGeneratingSequentialTimestampedString(constantPart, alias, isTimestamped, isSequential))
 		  										  .build();
 		
-	    saveNewMask(new MaskEntity(constantPart, alias, isTimestamped, isSequential));
-		return "test";
+	    DAO.saveNewEntity(new MaskEntity(constantPart, alias, isTimestamped, isSequential));
+		return "new command saved..";
 	}
 	
 	private void saveNewMask(MaskEntity mask){

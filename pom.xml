@@ -35,6 +35,11 @@
 			<scope>system</scope>
 			<systemPath>C:\ObjectDB\objectdb-2.6.9_06\bin\objectdb.jar</systemPath>
 		</dependency>
+		<dependency>
+  			<groupId>com.github.mifmif</groupId>
+  			<artifactId>generex</artifactId>
+  			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

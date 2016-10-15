@@ -1,30 +1,30 @@
 package tutka.mateusz.tester.utils.testerAssistant.methods;
 
-import java.util.Collections;
 import java.util.List;
 
 import tutka.mateusz.interfaces.Method;
 import tutka.mateusz.tester.utils.testerAssistant.daolike.DAO;
-import tutka.mateusz.tester.utils.testerAssistant.domain.MaskEntity;
+import tutka.mateusz.tester.utils.testerAssistant.domain.AliasEntity;
 
 public class RemoveAlias implements Method {
 
 	@Override
 	public String execute(String... args) {
-		List<MaskEntity> masks = DAO.findMaskByAlias(args[0].trim());
-		for(MaskEntity entity: masks){
+		List<AliasEntity> aliases = DAO.findMaskByAlias(args[0].trim());
+		for(AliasEntity entity: aliases){
 			DAO.removeMaskEntity(entity);
 		}
-		return message(masks);
+		return message(aliases);
 	}
 	
-	private String message(List<MaskEntity> masks){
-		if(masks.isEmpty()){
-			return "Provided alias not found..";
+	private String message(List<AliasEntity> aliases){
+		if(aliases.isEmpty()){
+			return " Provided alias not found..";
 		}
 		StringBuilder sb = new StringBuilder();
-		for(MaskEntity mask: masks){
-			sb.append(mask)
+		for(AliasEntity alias: aliases){
+			sb.append(' ')
+			  .append(alias.getAlias())
 			  .append(" removed successfully \n");
 		}
 		
