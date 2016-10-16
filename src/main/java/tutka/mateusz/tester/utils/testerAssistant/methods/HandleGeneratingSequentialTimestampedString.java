@@ -3,6 +3,7 @@ package tutka.mateusz.tester.utils.testerAssistant.methods;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 import tutka.mateusz.interfaces.Method;
 import tutka.mateusz.tester.utils.testerAssistant.clipboard.ClipboardHandle;
@@ -13,13 +14,15 @@ public class HandleGeneratingSequentialTimestampedString implements Method {
 	private String alias;
 	private boolean isTimestamped;
 	private boolean isSequential;
+	private String dateFormat;
 	
-	public HandleGeneratingSequentialTimestampedString(String constantPart,	String alias, boolean isTimestamped, boolean isSequential) {
+	public HandleGeneratingSequentialTimestampedString(String constantPart,	String alias, boolean isTimestamped, boolean isSequential, String dateFormat) {
 		super();
 		this.constantPart = constantPart;
 		this.alias = alias;
 		this.isTimestamped = isTimestamped;
 		this.isSequential = isSequential;
+		this.dateFormat = dateFormat;
 	}
 
 	public String execute(String... args){
@@ -38,7 +41,7 @@ public class HandleGeneratingSequentialTimestampedString implements Method {
 	private String getCurrentDate(){
 		Calendar calendar = Calendar.getInstance();
 		Date now = calendar.getTime();
-		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyy");
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		return sdf.format(now);
 	}
 

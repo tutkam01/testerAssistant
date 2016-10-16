@@ -1,6 +1,11 @@
 package tutka.mateusz.tester.utils.testerAssistant.methods;
 
+import java.text.SimpleDateFormat;
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
+
+import org.apache.commons.lang3.StringUtils;
 
 import tutka.mateusz.console_application.Application;
 import tutka.mateusz.interfaces.Method;
@@ -20,22 +25,24 @@ public class HandleSettingMask implements Method {
 		String alias = args[1];
 		boolean isTimestamped = Boolean.parseBoolean(args[2]);
 		boolean isSequential = Boolean.parseBoolean(args[3]);
+		String dateFormat = StringUtils.isNotBlank(args[4])?args[4]:null;
 		
 		application.getApplicationCommandBuilder().withKeyWord(alias)
-		  										  .withMethod(new HandleGeneratingSequentialTimestampedString(constantPart, alias, isTimestamped, isSequential))
+		  										  .withMethod(new HandleGeneratingSequentialTimestampedString(constantPart, alias, isTimestamped, isSequential, verifyProvidedDateFormat(dateFormat)))
 		  										  .build();
 		
-	    DAO.saveNewEntity(new MaskEntity(constantPart, alias, isTimestamped, isSequential));
+	    DAO.saveNewEntity(new MaskEntity(constantPart, alias, isTimestamped, isSequential, dateFormat));
 		return "new command saved..";
 	}
 	
-	private void saveNewMask(MaskEntity mask){
-		EntityManager em = ObjectDatabaseFactory.getEntityManagerFactory().createEntityManager();
-		em.getTransaction().begin();
-		em.persist(mask);
-		em.getTransaction().commit();
-		em.close();
-		ObjectDatabaseFactory.getEntityManagerFactory().close();
+    private String verifyProvidedDateFormat(String format){
+    	try{
+    		new SimpleDateFormat(format);
+    		return format;
+    	}catch(Exception e){
+    		return "ddMMyy";
+    	}
 	}
-
+	
+	
 }
