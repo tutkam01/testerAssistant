@@ -4,7 +4,7 @@
 
 	<groupId>tutka.mateusz.tester.utils</groupId>
 	<artifactId>testerAssistant</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>testerAssistant</name>
@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>tutka.mateusz</groupId>
 			<artifactId>console_application</artifactId>
-			<version>1.0.2</version>
+			<version>1.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -31,9 +31,7 @@
 		<dependency>
 			<groupId>objectdb</groupId>
 			<artifactId>objectdb</artifactId>
-			<version>1.0.0</version>
-			<scope>system</scope>
-			<systemPath>C:\ObjectDB\objectdb-2.6.9_06\bin\objectdb.jar</systemPath>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
   			<groupId>com.github.mifmif</groupId>
@@ -53,8 +51,36 @@
 					<target>${jdk.version}</target>
 				</configuration>
 			</plugin>
-		</plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<!-- get all project dependencies -->
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<!-- MainClass in mainfest make a executable jar -->
+					<archive>
+					  <manifest>
+						<mainClass>tutka.mateusz.tester.utils.testerAssistant.App</mainClass>
+					  </manifest>
+					</archive>
 
+				</configuration>
+				<executions>
+				  <execution>
+					<id>make-assembly</id>
+                                        <!-- bind to the packaging phase -->
+					<phase>package</phase>
+					<goals>
+						<goal>single</goal>
+					</goals>
+				  </execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
+
 
 </project>

@@ -10,7 +10,7 @@ public class RemoveAlias implements Method {
 
 	@Override
 	public String execute(String... args) {
-		List<AliasEntity> aliases = DAO.findMaskByAlias(args[0].trim());
+		List<AliasEntity> aliases = DAO.findAlias(args[0].trim());
 		for(AliasEntity entity: aliases){
 			DAO.removeMaskEntity(entity);
 		}

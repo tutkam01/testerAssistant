@@ -14,6 +14,7 @@ import tutka.mateusz.tester.utils.testerAssistant.methods.HandleSettingMask;
 import tutka.mateusz.tester.utils.testerAssistant.methods.IncreaseSequence;
 import tutka.mateusz.tester.utils.testerAssistant.methods.RemoveAlias;
 import tutka.mateusz.tester.utils.testerAssistant.methods.SetSequence;
+import tutka.mateusz.tester.utils.testerAssistant.methods.ShowAliasDetails;
 import tutka.mateusz.tester.utils.testerAssistant.methods.ShowAllAliases;
 import tutka.mateusz.tester.utils.testerAssistant.persistance.ObjectDatabaseFactory;
 /**
@@ -40,9 +41,11 @@ public class App
 				 									 + "--To add command generating random string based on a regular expression, let's say {\\d}12 call:\n"
 				 									 + " add regex {\\d}12 as alias dozendigits\n"
 				 									 + " Now each time you call 'dozendigits' the requested random string matching provided regex will be copied to the clipboard\n"
-				 									 + "-- To remove command stored as alias just call: remove alias\n"
+				 									 + "-- To remove command stored as alias just call: remove 'alias'\n"
 				 									 + " for example 'remove dozendigits'\n"
-				 									 + "--To show all saved commands call: show all aliases\n\n"
+				 									 + "--To show all saved commands call: show all aliases\n"
+				 									 + "--To print alias config details, call: print alias details 'alias'\n"
+				 									 + " for example 'print alias details firstname'\n\n"
 				 									 + "Please remember that you may hit 'tab' button to hint the keyword");
     	
         
@@ -71,6 +74,10 @@ public class App
     	application.getApplicationCommandBuilder().withKeyWord("show all aliases")
     											  .withMethod(new ShowAllAliases())
     											  .build();
+    	
+    	application.getApplicationCommandBuilder().withKeyWord("print alias details")
+		  										  .withMethod(new ShowAliasDetails())
+		  										  .build();
 
     	
     	for(AliasEntity entity: DAO.retieveAllAliases()){

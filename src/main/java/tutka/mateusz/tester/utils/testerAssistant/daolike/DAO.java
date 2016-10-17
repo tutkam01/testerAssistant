@@ -17,7 +17,7 @@ public class DAO {
 			return query.getResultList();
 	}
 	
-	public static List<AliasEntity> findMaskByAlias(String alias){
+	public static List<AliasEntity> findAlias(String alias){
 		TypedQuery<AliasEntity> query = em.createQuery("SELECT al FROM AliasEntity al where al.alias = :alias", AliasEntity.class);
 		return query.setParameter("alias", alias).getResultList();
 	}

@@ -24,9 +24,9 @@ public class ShowAllAliases implements Method {
 		formatter.format(" %1$-10s %2$-15s %3$-30s %4$-10s %5$-10s %6$-15s\n", "ALIAS", "CONSTANT_PART", "REGEX", "TIMESTAMP", "SEQUENCE", "DATE_FORMAT");
 			for(AliasEntity alias: aliases){
 				if(alias instanceof MaskEntity){
-					formatter.format(" %1$-10s %2$-15s %3$-30s %4$-10b %5$-10b %6$-15s\n", alias.getAlias(), ((MaskEntity) alias).getConstantPart(), "N/A", ((MaskEntity) alias).isTimestamped(), ((MaskEntity) alias).isSequential(), ((MaskEntity) alias).getDateFormat());
+					formatter.format(" %1$-10s %2$-15s %3$-30s %4$-10b %5$-10b %6$-15s\n", alias.getAlias(), truncateTo(15, ((MaskEntity) alias).getConstantPart()), "N/A", ((MaskEntity) alias).isTimestamped(), ((MaskEntity) alias).isSequential(), ((MaskEntity) alias).getDateFormat());
 				}else{
-					formatter.format(" %1$-10s %2$-15s %3$-30s %4$-10s %5$-10s %6$-15s\n", alias.getAlias(), "N/A", ((RegexEntity) alias).getRegex(), "N/A", "N/A", "N/A");
+					formatter.format(" %1$-10s %2$-15s %3$-30s %4$-10s %5$-10s %6$-15s\n", alias.getAlias(), "N/A", truncateTo(30,((RegexEntity) alias).getRegex()), "N/A", "N/A", "N/A");
 				}
 			}
 		
@@ -34,6 +34,10 @@ public class ShowAllAliases implements Method {
 		}finally{
 			formatter.close();
 		}
+	}
+	
+	private String truncateTo(int charactersLength, String tooLongString){
+		return (tooLongString.length()>charactersLength)?tooLongString.substring(0, charactersLength):tooLongString;
 	}
 
 }
